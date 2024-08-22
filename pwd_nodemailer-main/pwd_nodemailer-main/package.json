@@ -1,0 +1,25 @@
+{
+  "name": "golf_nodemailer",
+  "version": "1.0.0",
+  "description": "nodemailer for golf app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gully2Global/golf_nodemailer.git"
+  },
+  "author": "rajat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gully2Global/golf_nodemailer/issues"
+  },
+  "homepage": "https://github.com/Gully2Global/golf_nodemailer#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.14"
+  }
+}
