@@ -656,6 +656,115 @@ function institute(institutename, instituteemail, institutepassword) {
     `;
   }
 
+function approvedcreated(username,useremail,password) {
+    return `
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to PWD Training App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color:#ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header img {
+            max-width: 150px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .content h3 {
+            color: #28a745;
+        }
+        .content p {
+            line-height: 1.6;
+        }
+        .content .cta-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #28a745;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .content .cta-button-secondary {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #DA8D45;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .emoji {
+            font-size: 24px;
+        }
+        .footer {
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #777777;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <img src="https://media.9curry.com/uploads/organization/image/3319/pwd-karnataka-logo.png" alt="PWD Training App Logo">
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h3>🎉 Congratulations & Welcome to PWD Training App! 🎉</h3>
+            <p>Dear <strong>${username}</strong>,</p>
+            <p>We're thrilled to inform you that your account has been approved by our admin team! 🎉🎊</p>
+            <p>Your account on the PWD Training App has been successfully created. Below are your login details:</p>
+            <p><strong>User email:</strong>${useremail}</p>
+            <p><strong>Password:</strong> ${password}</p>
+            <p>To get started, click the button below to log in and access your scheduled training sessions:</p>
+            <a href="https://p-w-d-project-uszovs.flutterflow.app/" class="cta-button">Login to Your Account</a>
+            <p class="emoji">🎓📅🚀</p>
+           <!--- <p>To ensure that your profile is complete, please log in and update your details. This is an important step in gaining full access to the PWD Training platform.</p>
+            <a href="https://p-w-d-project-uszovs.flutterflow.app/" class="cta-button-secondary">Update Your Profile</a>
+        </div>-->
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2024 PWD Training App. All rights reserved.</p>
+            <p>If you have any questions or need assistance, please contact our support team at <a href="mailto:support@pwdapp.com">support@pwdapp.com</a>.</p>
+        </div>
+    </div>
+</body>
+</html>
+
+    `;
+  }
+
 
 
   
@@ -859,6 +968,33 @@ app.post("/send-instituteemail", async (req, res) => {
         from: "Info@gully2global.com", // Sender address
         to: email, // List of receivers
         subject: "Training session details", // Subject line
+        html: htmlContent, // HTML body content
+      });
+  
+      console.log("Message sent: %s", info.messageId);
+      res.status(200).send({ message: "Email sent successfully" });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      res.status(500).send({ error: "Failed to send email" });
+    }
+  });
+
+app.post("/approved-created", async (req, res) => {
+    const { email, username, useremail, password } = req.body;
+  
+    if (!email || !username || !useremail || !password) {
+      return res
+        .status(400)
+        .send({ error: "email, username, useremail, and password parameters are required" });
+    }
+  
+    const htmlContent = approvedcreated(username,useremail,password);
+  
+    try {
+      let info = await transporter.sendMail({
+        from: "Info@gully2global.com", // Sender address
+        to: email, // List of receivers
+        subject: "Account Approved & Created", // Subject line
         html: htmlContent, // HTML body content
       });
   
